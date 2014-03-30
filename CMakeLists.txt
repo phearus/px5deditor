@@ -111,12 +111,12 @@ find_package(Threads REQUIRED)
 
 # Px5d editor target
 ADD_EXECUTABLE( px5deditor ${PX5DE_SRCS} ${PX5DE_MOC_SRCS} ${PX5DE_RC_SRC} ${PX5DE_UI_HDRS} )
-TARGET_LINK_LIBRARIES( px5deditor ${QT_LIBRARIES} ${ALSA_LIBRARIES} )
+TARGET_LINK_LIBRARIES( px5deditor ${QT_LIBRARIES} ${ALSA_LIBRARIES} ${CMAKE_THREAD_LIBS_INIT})
 
 find_package (ALSA REQUIRED)
 if (ALSA_FOUND)
   include_directories(${ALSA_INCLUDE_DIRS})
-  target_link_libraries (px5deditor ${ALSA_LIBRARIES})
+  target_link_libraries (px5deditor ${ALSA_LIBRARIES} ${CMAKE_THREAD_LIBS_INIT})
 endif (ALSA_FOUND)
 
 
@@ -166,25 +166,29 @@ if(UNIX AND NOT APPLE)
 #	install( PROGRAMS ${CMAKE_CURRENT_BINARY_DIR}/px5deditor DESTINATION bin )
 #	install( FILES ${APP_ICON} DESTINATION share/icons )
 
-    install (FILES data/px5d_16x16.png
-             DESTINATION share/icons/hicolor/16x16/apps
-             RENAME px5deditor.png)
+#    install (FILES data/px5d_16x16.png
+#             DESTINATION share/icons/hicolor/16x16/apps
+#             RENAME px5deditor.png)
+#
+#    install (FILES data/px5d_32x32.png
+#             DESTINATION share/icons/hicolor/32x32/apps
+#             RENAME px5deditor.png)
+#
+#    install (FILES data/px5d_48x48.png
+#             DESTINATION share/icons/hicolor/48x48/apps
+#             RENAME px5deditor.png)
 
-    install (FILES data/px5d_32x32.png
-             DESTINATION share/icons/hicolor/32x32/apps
-             RENAME px5deditor.png)
+    install (FILES data/px5deditor-logo.ico
+             DESTINATION share/icons/custom
+             RENAME px5deditor-logo.ico)
 
-    install (FILES data/px5d_48x48.png
-             DESTINATION share/icons/hicolor/48x48/apps
-             RENAME px5deditor.png)
+#    install (FILES data/px5d_64x64.png
+#             DESTINATION share/icons/hicolor/64x64/apps
+#             RENAME px5deditor.png)
 
-    install (FILES data/px5d_64x64.png
-             DESTINATION share/icons/hicolor/64x64/apps
-             RENAME px5deditor.png)
-
-    install (FILES data/px5d_128x128.png
-             DESTINATION share/icons/hicolor/128x128/apps
-             RENAME px5deditor.png)
+#    install (FILES data/px5d_128x128.png
+#             DESTINATION share/icons/hicolor/128x128/apps
+#             RENAME px5deditor.png)
 
     install( TARGETS px5deditor RUNTIME DESTINATION bin )
 

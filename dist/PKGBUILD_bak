@@ -7,8 +7,8 @@ arch=(i686 x86_64)
 url="http://www.exp-media.com/px5d_editor_linux"
 license=('GPL3')
 groups=()
-depends=('qt4')
-makedepends=('git' 'cmake' 'alsa-lib' )
+depends=('qt')
+makedepends=('git' 'cmake')
 optdepends=()
 provides=()
 conflicts=()
@@ -22,27 +22,27 @@ noextract=()
 
 # git clone https://github.com/soulfish/px5deditor.git --depth=1
 
-#_gitroot="git://github.com/soulfish/px5deditor.git"
-#_gitname="px5deditor"
+_gitroot="git://github.com/soulfish/px5deditor.git"
+_gitname="px5deditor"
 
 build() {
   cd "$srcdir"
-#  msg "Connecting to GIT server...."
+  msg "Connecting to GIT server...."
 
-#  if [[ -d "$_gitname" ]]; then
-#    cd "$_gitname" && git pull origin
-#    msg "The local files are updated."
-#  else
+  if [[ -d "$_gitname" ]]; then
+    cd "$_gitname" && git pull origin
+    msg "The local files are updated."
+  else
 #    git clone "$_gitroot" "$_gitname"
-#    git clone "$_gitroot" "$_gitname" --branch branch_name
-#  fi
+    git clone "$_gitroot" "$_gitname" --branch branch_name
+  fi
 
-#  msg "GIT checkout done or server timeout"
+  msg "GIT checkout done or server timeout"
   msg "Starting build..."
 
-#  rm -rf "$srcdir/$_gitname-build"
-#  git clone "$srcdir/$_gitname" "$srcdir/$_gitname-build" --branch branch_name
-#  cd "$srcdir/$_gitname-build"
+  rm -rf "$srcdir/$_gitname-build"
+  git clone "$srcdir/$_gitname" "$srcdir/$_gitname-build" --branch branch_name
+  cd "$srcdir/$_gitname-build"
 
   #
   # BUILD HERE
@@ -51,12 +51,11 @@ build() {
   # prepare build dir
   [ -d build ] || mkdir build && cd build
   cmake .. -DCMAKE_INSTALL_PREFIX:PATH=/usr -DCMAKE_BUILD_TYPE=release
-  make
+ # make
 }
 
 package() {
-#  cd "$srcdir/$_gitname-build/build"
-  cd "$srcdir/build"
+  cd "$srcdir/$_gitname-build/build"
   make DESTDIR="$pkgdir/" install
 }
 
